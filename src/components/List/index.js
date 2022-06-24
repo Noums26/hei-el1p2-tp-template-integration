@@ -4,12 +4,26 @@ import Modal, { ModalBtn } from "../Modal";
 import "./style.css";
 
 export function EmployeeList(props) {
-  const { items, showModal, database } = props;
+  const { items, showModal, database, setData, setModif, setTemp } = props;
   const objKey = Object.keys(database[0])
-  const [person, setPerson] = useState({});
 
-  const modifyData = (e) => {
-     const {name} = e.target
+  const modifyData = (e, item) => {
+    setTemp(item.id)
+    setData({
+      name: item.name,
+      username: item.username,
+      email: item.email, 
+      adress: {
+        street: item.address.street,
+        suite: item.address.suite,
+        city: item.address.city,
+        zipcode: item.address.zipcode
+      },
+      phone: item.phone,
+      website: item.website
+    })
+    setModif(true)
+    showModal()
   }
 
   return (
@@ -58,8 +72,8 @@ export function EmployeeList(props) {
             </tr>
           </tfoot>
           <tbody>
-            {(database || []).map((item, index) => (
-              <tr key={index} onClick={(e) => modifyData(e)}>
+            {(database || []).map((item) => (
+              <tr key={item.name} onClick={(e) => modifyData(e, item)}>
                 <td>{item.name}</td>
                 <td>{item.username}</td>
                 <td>{item.email}</td>

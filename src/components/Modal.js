@@ -1,13 +1,13 @@
 import React from 'react';
 import "./styles/Modal.css";
 
-const Modal = ({modalStyle, hideModal, modalContentStyle, changement, data, changementAdress, sendUsers}) => {
+const Modal = ({modalStyle, hideModal, modalContentStyle, changement, data, changementAdress, sendUsers, modif, modifyUser}) => {
     return (
         <div>
             <div className={modalStyle} onClick={e => {hideModal()}} >
             </div>
             <div className={modalContentStyle} >
-                <h3>Ajouter un User</h3><hr/>
+                {modif && <h3>Modifier les données</h3> || <h3>Ajouter un User</h3>}
                 <div className='form-group row my-2'>
                     <label className='col-sm-2 col-form-label'>Name</label>
                     <div className='col-sm-10'>
@@ -72,7 +72,8 @@ const Modal = ({modalStyle, hideModal, modalContentStyle, changement, data, chan
                     </div>
                 </div>
 
-                <a href="#" onClick={e => sendUsers(e)} className='form-control btn btn-primary' >Ajouter l'Utilisateur</a>
+                {modif && <a href="#" onClick={e => modifyUser(e)} className='form-control btn btn-primary' >Modifier les informations</a> ||
+                <a href="#" onClick={e => sendUsers(e)} className='form-control btn btn-primary' >Ajouter l'Utilisateur</a>}
             </div>
         </div>
     );
