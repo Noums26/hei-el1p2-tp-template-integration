@@ -1,7 +1,17 @@
+import axios from "axios";
+import { useState } from "react";
+import Modal, { ModalBtn } from "../Modal";
 import "./style.css";
 
 export function EmployeeList(props) {
-  const { items } = props;
+  const { items, showModal, database } = props;
+  const objKey = Object.keys(database[0])
+  const [person, setPerson] = useState({});
+
+  const modifyData = (e) => {
+     const {name} = e.target
+  }
+
   return (
     <div className="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
       <div className="dataTable-top">
@@ -20,44 +30,41 @@ export function EmployeeList(props) {
           </label>
         </div>
         <div className="dataTable-search">
-          <input
-            className="dataTable-input"
-            placeholder="Search..."
-            type="text"
-          />
+          <ModalBtn showModal={showModal} />
         </div>
       </div>
       <div className="dataTable-container">
         <table className="table-bordered">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              {
+                objKey.map((val, index) => {
+                  if (index != 0 && index != 4 && index != 7) {
+                    return(<th>{val}</th>)
+                  }
+                })
+              }
             </tr>
           </thead>
           <tfoot>
             <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              {
+                objKey.map((val, index) => {
+                  if (index != 0 && index != 4 && index != 7) {
+                    return(<th>{val}</th>)
+                  }
+                })
+              }
             </tr>
           </tfoot>
           <tbody>
-            {(items || []).map((item) => (
-              <tr key={item.name}>
+            {(database || []).map((item, index) => (
+              <tr key={index} onClick={(e) => modifyData(e)}>
                 <td>{item.name}</td>
-                <td>{item.position}</td>
-                <td>{item.office}</td>
-                <td>{item.age}</td>
-                <td>{item.startDate}</td>
-                <td>{item.salary}</td>
+                <td>{item.username}</td>
+                <td>{item.email}</td>
+                <td>{item.phone}</td>
+                <td>{item.website}</td>
               </tr>
             ))}
           </tbody>
