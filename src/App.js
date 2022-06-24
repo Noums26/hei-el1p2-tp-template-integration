@@ -33,16 +33,17 @@ function App() {
   const [database, setDatabase] = useState([]);
 
   
+  
   useEffect(() => {
     axios.get('https://jsonplaceholder.typicode.com/users')
     .then((res) => {
       setDatabase(res.data)
     })
     .catch((err) => {
-
+      
     })
   }, []);
-
+  
   const changement = (e) => {
     const { name, value } = e.target;
     setData({
@@ -64,7 +65,7 @@ function App() {
       ["adress"]: adressTemp
     })
   }, [adressTemp]);
-
+  
   const hideModal = () => {
     setModalContentStyle('ModalHide');
     setModalStyle('ModalHide');
@@ -73,6 +74,12 @@ function App() {
   const showModal = () => {
     setModalContentStyle('ModalContent0');
     setModalStyle('ModalShow')
+  }
+
+  const sendUsers = (e) => {
+    setDatabase([...database, data])
+    setData(initialData)
+    hideModal()
   }
 
   function toggleSidebarClass() {
@@ -95,7 +102,7 @@ function App() {
             
             <div className="container-fluid px-4">
               <h1 className="mt-4">Tables</h1>
-              <Modal modalStyle={modalStyle} modalContentStyle={modalContentStyle} hideModal={hideModal} changement={changement} changementAdress={changementAdress} />
+              <Modal modalStyle={modalStyle} modalContentStyle={modalContentStyle} hideModal={hideModal} sendUsers={sendUsers} changement={changement} changementAdress={changementAdress} data={data} />
               <Breadcrumb />
               <Card>
                 DataTables is a third party plugin that is used to generate the
