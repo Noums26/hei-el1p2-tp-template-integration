@@ -78,15 +78,23 @@ function App() {
   }
 
   const sendUsers = (e) => {
+    // Impossible de faire des POST sur /users
     setDatabase([...database, data])
     setData(initialData)
     hideModal()
   }
 
   const modifyUser = (e) => {
+    // Impossible de faire un POST sur /users
+    // Donc j'ai juste changer les données
     for (const item of database) {
       if (item.id == temp) {
-        
+        item.name = data.name
+        item.username = data.username
+        item.email = data.email
+        item.address = data.adress
+        item.phone = data.phone
+        item.website = data.website
       }
     }
     setData(initialData)
